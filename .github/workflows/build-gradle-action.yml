@@ -1,0 +1,32 @@
+name: Build Orion Application
+
+on:
+  push:
+    branches:
+      - main
+      - mobile_app_dev
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '17'
+
+    - name: Grant execute permissions to Gradle wrapper
+      run: |
+        cd src/app/main/project_orion/
+        chmod +x gradlew
+
+    - name: Build Project
+      run: |
+        cd src/app/main/project_orion/
+        ./gradlew build
